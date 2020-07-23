@@ -1,10 +1,10 @@
 public class Converter {
     public double milesToInches(double miles) {
         int inchesInAMile = 63360;
-        return miles * inchesInAMile;
+        return Math.round((miles * inchesInAMile) * 100.0) / 100.0;
     }
 
     public double areaOfCircle(double radius) {
-        return (radius * radius) * Math.PI;
+        return Math.round(((radius * radius) * Math.PI) * 100.0) / 100.0;
     }
 }

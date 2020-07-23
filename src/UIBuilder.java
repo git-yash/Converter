@@ -1,9 +1,9 @@
 import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
+import java.awt.*;
 
 public class UIBuilder {
     private static final JLabel answer = new JLabel();
-    // TODO: YMS - Validate empty input string, set default focus to text input
 
     private static @NotNull JFrame createJFrame() {
         JFrame f = new JFrame("Converter");
@@ -34,20 +34,28 @@ public class UIBuilder {
             String strTextField = textField.getText();
 
             // TODO - YMS - Create Enum
-            if (whichCalculation.equals("milesToInches")) {
-                double inches = converter.milesToInches(Double.parseDouble(strTextField));
-                String numberOfInches = String.valueOf(inches);
-                answer.setText(numberOfInches + " inches");
-            } else {
-                double area = converter.areaOfCircle(Double.parseDouble(strTextField));
-                String strArea = String.valueOf(area);
-                answer.setText(strArea + " units ^2");
+            try {
+                if (whichCalculation.equals("milesToInches")) {
+                    double inches = converter.milesToInches(Double.parseDouble(strTextField));
+                    String numberOfInches = String.valueOf(inches);
+                    answer.setForeground(Color.black);
+                    answer.setText(numberOfInches + " inches");
+                } else {
+                    double area = converter.areaOfCircle(Double.parseDouble(strTextField));
+                    String strArea = String.valueOf(area);
+                    answer.setForeground(Color.black);
+                    answer.setText(strArea + " units ^2");
+                }
+            }
+            catch (NumberFormatException e){
+                answer.setText("Error: Invalid Input");
+                answer.setForeground(Color.red);
             }
         });
         return b;
     }
 
-    private static JLabel createTitle(String text) {
+    private static @NotNull JLabel createTitle(String text) {
         JLabel label = new JLabel();
 
         label.setBounds(100, 20, 150, 30);
@@ -59,19 +67,21 @@ public class UIBuilder {
     private static void createMilesToInchesWindow() {
         JFrame f = createJFrame();
         JLabel label = createTitle("Miles to Inches");
-        JTextField jTextField = createUnitInput();
-        JButton b = createCalculateButton(jTextField, "milesToInches");
+        JTextField unitInput = createUnitInput();
+        JButton calculateButton = createCalculateButton(unitInput, "milesToInches");
 
         f.add(label);
-        f.add(jTextField);
-        f.add(b);
+        f.add(unitInput);
+        f.add(calculateButton);
         f.add(backButton());
 
         answer.setBounds(100, 140, 200, 60);
         f.add(answer);
+
+        unitInput.requestFocusInWindow();
     }
 
-    private static JButton backButton() {
+    private static @NotNull JButton backButton() {
         JButton backButton = new JButton();
 
         backButton.setText("Back");
@@ -102,15 +112,17 @@ public class UIBuilder {
     private static void createAreaOfCircleWindow() {
         JFrame frame = createJFrame();
         JLabel label = createTitle("Area of Circle");
-        JTextField textField = createUnitInput();
-        JButton b = createCalculateButton(textField, "");
+        JTextField unitInput = createUnitInput();
+        JButton calculateButton = createCalculateButton(unitInput, "");
 
         frame.add(backButton());
         frame.add(label);
-        frame.add(textField);
-        frame.add(b);
+        frame.add(unitInput);
+        frame.add(calculateButton);
 
         answer.setBounds(100, 140, 200, 60);
         frame.add(answer);
+
+        unitInput.requestFocusInWindow();
     }
 }
