@@ -12,5 +12,7 @@ public enum Options {
         return this.option;
     }
 
-
+    public String getTitle() {
+        return option == MILES_TO_INCHES.getLevelCode() ? "Miles of inches" : "Area of circle";
+    }
 }
