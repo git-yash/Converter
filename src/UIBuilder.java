@@ -7,11 +7,14 @@ public class UIBuilder {
     private final JFrame mainPanel = createJFrame();
     private final JFrame milesToInchesPanel = createJFrame();
     private final JFrame areaOfCirclePanel = createJFrame();
+    private final JTextField milesUnitInput = createUnitInput();
+    private final JTextField areasUnitInput = createUnitInput();
 
     public void mainWindow() {
         setMainPanel();
-        setPanel(milesToInchesPanel, Options.MILES_TO_INCHES);
-        setPanel(areaOfCirclePanel, Options.AREA_OF_CIRCLE);
+        setPanel(milesToInchesPanel, milesUnitInput, Options.MILES_TO_INCHES);
+        setPanel(areaOfCirclePanel, areasUnitInput, Options.AREA_OF_CIRCLE);
+
         showMainPanel();
     }
 
@@ -26,7 +29,7 @@ public class UIBuilder {
         areaOfCirclePanel.setVisible(false);
 
         milesToInchesPanel.setVisible(true);
-        milesToInchesPanel.getComponentAt(50,60).requestFocusInWindow();
+        milesUnitInput.requestFocusInWindow();
     }
 
     private void showAreaOfCirclePanel() {
@@ -34,7 +37,7 @@ public class UIBuilder {
         milesToInchesPanel.setVisible(false);
 
         areaOfCirclePanel.setVisible(true);
-        areaOfCirclePanel.getComponentAt(50,60).requestFocusInWindow();
+        areasUnitInput.requestFocusInWindow();
     }
 
     private void setMainPanel() {
@@ -122,16 +125,15 @@ public class UIBuilder {
         return message;
     }
 
-    private void setPanel(JFrame panel, Options options) {
+    private void setPanel(JFrame panel, JTextField unitInput, Options options) {
         JLabel label = createTitle(options.getTitle());
         JLabel message = createMessage();
-        JTextField unitInput = createUnitInput();
         JButton calculateButton = createCalculateButton(unitInput, message, options);
 
         panel.add(backButton());
         panel.add(label);
-        panel.add(unitInput);
         panel.add(calculateButton);
         panel.add(message);
+        panel.add(unitInput);
     }
 }
